@@ -300,7 +300,7 @@ mongoClient.connect(`mongodb://localhost:27017/crunchbase`, (error, db) => {
           case '14':
             // 14.- Names of the companies that has "social-networking" in tag-list (be aware that the value of field is a string check regex operators)
             db.collection('companies')
-              .find({ tag_list: /social\-networking/ }, { name: 1, _id: 0 })
+              .find({ tag_list: /social-networking/ }, { name: 1, _id: 0 })
               .toArray((error, result) => {
                 if (error) {
                   console.log(error);
@@ -321,7 +321,7 @@ mongoClient.connect(`mongodb://localhost:27017/crunchbase`, (error, db) => {
               .find(
                 {
                   $and: [
-                    { tag_list: /social\-networking/ },
+                    { tag_list: /social-network/ },
                     { founded_year: { $gte: 2002 } },
                     { founded_year: { $lte: 2016 } },
                   ],
@@ -347,7 +347,12 @@ mongoClient.connect(`mongodb://localhost:27017/crunchbase`, (error, db) => {
             db.collection('companies')
               .find(
                 { 'offices.city': 'London' },
-                { name: 1, 'offices.country_code': 1, _id: 0 }
+                {
+                  name: 1,
+                  'offices.city': 1,
+                  'offices.country_code': 1,
+                  _id: 0,
+                }
               )
               .toArray((error, result) => {
                 if (error) {
@@ -369,7 +374,7 @@ mongoClient.connect(`mongodb://localhost:27017/crunchbase`, (error, db) => {
               .find(
                 {
                   $and: [
-                    { tag_list: /social\-networking/ },
+                    { tag_list: /social-network/ },
                     { founded_year: { $gte: 2002 } },
                     { founded_year: { $lte: 2016 } },
                     { 'offices.city': 'New York' },
